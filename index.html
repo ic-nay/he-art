@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>❤️</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+    body {
+      background-color: #202227;
+      font-family: sans-serif;
+      color: #DDD
+    }
+    .settings {
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      padding: 2%;
+      border-radius: 5px;
+      background-color: #313338;
+      text-align: center;
+    }
+    .settings input{
+      padding: 1em;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 1.2em;
+      margin-bottom:1em;
+    }
+    .settings input[type="button"]{
+      color:#DDD;
+      background-color: #202227;
+    }
+    .settings input[type="button"]:active{
+      background-color: #313338;
+    }
+    .settings input[type="number"]{
+      width:3em;
+    }
+    .settings #linker {
+      color:#DDD;
+    }
+    .settings #linker .material-symbols-outlined{
+      position:relative;
+      top:0.3em;
+    }
+    #canvas {
+    }
+    </style>
+</head>
+
+<body>
+  <table id="canvas">
+  </table>
+  <table>
+
+  </table>
+  <div class="settings">
+    <input type="button" value="COPY"></input>
+    <br>
+    <a href="#" id="linker" onclick="toggleLink()"><span class="material-symbols-outlined">
+link
+</span>Linked</a>
+    <br>
+    <input type="number" value="5" min=1></input>
+    <b>x</b>
+    <input type="number" value="5" min=1></input>
+    
+  </div>
+
+</body>
+<script>
+
+hearts = {
+  "red":"❤️",
+  "pink":"🩷",
+  "orange":"🧡",
+  "yellow":"💛",
+  "green":"💚",
+  "blue":"💙",
+  "light_blue":"🩵",
+  "purple":"💜",
+  "brown":"🤎",
+  "black":"🖤",
+  "white":"🤍",
+  "grey":"🩶"
+}
+
+LINKER = document.getElementById("linker")
+LINKER.addEventListener("click", toggleLink)
+
+LINKED = TRUE;
+
+CANVAS = document.getElementById("canvas")
+
+function toggleLink(){
+  LINKED = !LINKED
+  if (LINKED){
+  }
+  else {
+  
+  }
+}
+
+function 
+
+function setCanvasSize(width, height){
+  if (CANVAS.children.length() > height){
+    
+  }
+}
+
+</script>
+</html>
