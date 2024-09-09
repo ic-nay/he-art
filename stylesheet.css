@@ -1,0 +1,85 @@
+body {
+      background-color: #202227;
+      font-family: sans-serif;
+      color: #DDD
+    }
+    h1 {
+      font-size: 3.5em;
+      margin:0;
+      padding:0;
+      padding-left: 0.5em;
+    }
+    .canvas {
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 3em;
+      user-select: none;
+    }
+    .settings {
+      margin-left: auto;
+      margin-right: auto;
+      width: 30%;
+      padding: 2%;
+      border-radius: 5px;
+      background-color: #313338;
+      text-align: center;
+    }
+    .settings input{
+      padding: 1em;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 1.2em;
+      margin-bottom:1em;
+    }
+    .settings input[type="button"]{
+      color:#DDD;
+      background-color: #202227;
+    }
+    .settings input[type="button"]:active{
+      background-color: #313338;
+    }
+    .settings input[type="number"]{
+      width:3em;
+    }
+    .settings #linker {
+      color:#DDD;
+    }
+    .settings #linker .material-symbols-outlined{
+      position:relative;
+      top:0.3em;
+    }
+    .settings .picker_container {
+      display: inline-block;
+    }
+    .settings .picker_container .picker_button {
+      position:relative;
+      top:0.15em;
+      font-size: 2em;
+      text-decoration: none;
+      background-color: #424449;
+      padding-left: 0.1em;
+      padding-right: 0.1em;
+      border-radius: 0.5em;
+      color:#DDD;
+    }
+    .settings .picker_container .picker {
+      display: none;
+      z-index: 1;
+      border-radius: 0.5em;
+      padding: 1em;
+      font-size: 2em;
+    }
+    .settings .picker_container .picker a{
+      padding: 0.5em;
+      text-decoration: none;
+    }
+    .settings a:active .picker {
+      display: block;
+      position: absolute;
+      background-color: #424449;
+    }
+    .settings .picker_container:hover .picker {
+      display: block;
+      position: absolute;
+      background-color: #424449;
+    }
