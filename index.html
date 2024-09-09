@@ -55,12 +55,23 @@
       position:relative;
       top:0.3em;
     }
-    .settings .picker {
+    .settings .picker_container {
+      display: inline;
+      background-color: #FFF;
+    }
+    .settings .picker_container .picker_button {
       position:relative;
       top:0.15em;
       font-size: 2em;
       text-decoration: none;
-      -webkit-text-stroke: 1px white;
+    }
+    .settings .picker_container .picker {
+      display: none;
+    }
+    .settings .picker_container:hover .picker {
+      display: block;
+      position: absolute;
+      background-color: #FFF;
     }
     </style>
 </head>
@@ -76,9 +87,19 @@ link
 </span></a></b>
     <input type="number" value="5" min=1 id="height"></input>
     &nbsp;&nbsp;&nbsp;
-    <a href="#" id="foreground_picker" class="picker">❤️</a>
+    <div class="picker_container">
+      <span href="#" id="foreground_picker" class="picker_button">❤️</span>
+      <div class="picker">
+        F
+      </div>
+    </div>
     &nbsp;
-    <a href="#" id="background_picker" class="picker">🖤</a>
+    <div class="picker_container">
+      <a href="#" id="background_picker" class="picker_button">🖤</a>
+      <div class="picker">
+        F
+      </div>
+    </div>
     <br>
     <input type="button" value="UPLOAD"></input>
     &nbsp;
@@ -105,15 +126,15 @@ link
 
 hearts = ["❤️","🩷","🧡","💛","💚","💙","🩵","💜","🤎","🖤","🤍","🩶"]
 
+colouredHearts = []
 
 selecting = false;
 document.addEventListener("mousedown", function(){
   selecting = true;
-  document.title="SELECTING"
 })
 document.addEventListener("mouseup", function(){
   selecting = false;
-  document.title="NOT SELECTING"
+  colouredHearts = []
 })
 
 
@@ -121,11 +142,22 @@ const CANVAS = document.getElementById("canvas")
 
 const LINKER = document.getElementById("linker")
 LINKER.addEventListener("click", toggleLink)
-linked = true;
+linked = false;
+
+const WIDTHSELECTOR = document.getElementById("width")
+const HEIGHTSELECTOR = document.getElementById("height")
+WIDTHSELECTOR.addEventListener("change", function(){
+  checkLinked(WIDTHSELECTOR.value)
+  setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value)
+})
+HEIGHTSELECTOR.addEventListener("change", function(){
+  checkLinked(HEIGHTSELECTOR.value)
+  setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value) 
+})
 
 const PICKER = document.getElementById("picker")
-foregroundColour = "❤️"
-backgroundColour = "🖤"
+colourOne = "❤️"
+colourTwo = "🖤"
 
 function setLinkedStatus(){
   icon = LINKER.firstChild.cloneNode(true)
@@ -143,22 +175,11 @@ function toggleLink(){
   setLinkedStatus();
 }
 
-function colourheart(heart){
-  heart.innerHTML = foregroundColour
-}
-
-function heartentry(e){
-  if (selecting == true){
-    colourheart(e.target)
+function checkLinked(value){
+  if (linked){
+    WIDTHSELECTOR.value = value
+    HEIGHTSELECTOR.value = value
   }
-}
-
-function makeNewHeart(){
-  td = document.createElement("td")
-  td.innerHTML = backgroundColour
-  td.addEventListener("mousedown", function(e){colourheart(e.target)})
-  td.addEventListener("mouseenter", heartentry)
-  return td
 }
 
 function makeNewRow(width){
@@ -186,10 +207,36 @@ function setCanvasSize(width, height){
   }
 }
 
+function toggleheart(heart){
+  if (!colouredHearts.includes(heart)){
+    colouredHearts.push(heart)
+    if (heart.innerHTML == colourTwo){
+      heart.innerHTML = colourOne
+    }
+    else {
+      heart.innerHTML = colourTwo
+    }
+  }
+}
+
+function heartentry(e){
+  if (selecting == true){
+    toggleheart(e.target)
+  }
+}
+
+function makeNewHeart(){
+  td = document.createElement("td")
+  td.innerHTML = colourTwo
+  td.addEventListener("mousedown", function(e){toggleheart(e.target)})
+  td.addEventListener("mouseenter", heartentry)
+  return td
+}
+
 function setup(){
   setLinkedStatus()
-  setCanvasSize(document.getElementById("width").value, document.getElementById("height").value)
-  
+  checkLinked(6)
+  setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value) 
 }
 setup()
 </script>
