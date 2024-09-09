@@ -10,10 +10,22 @@
       font-family: sans-serif;
       color: #DDD
     }
+    h1 {
+      font-size: 3.5em;
+      margin:0;
+      padding:0;
+      padding-left: 0.5em;
+    }
+    .canvas {
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 3em;
+      user-select: none;
+    }
     .settings {
       margin-left: auto;
       margin-right: auto;
-      width: 50%;
+      width: 30%;
       padding: 2%;
       border-radius: 5px;
       background-color: #313338;
@@ -43,34 +55,39 @@
       position:relative;
       top:0.3em;
     }
-    #canvas {
+    .settings .picker {
+      position:relative;
+      top:0.15em;
+      font-size: 2em;
+      text-decoration: none;
+      -webkit-text-stroke: 1px white;
     }
     </style>
 </head>
 
 <body>
-  <table id="canvas">
-  </table>
-  <table>
-
-  </table>
+<h1>❤️🎨</h1>
+  <table id="canvas" class="canvas"></table>
   <div class="settings">
-    <input type="button" value="COPY"></input>
     <br>
-    <a href="#" id="linker"><span class="material-symbols-outlined">
+    <input type="number" value="5" min=1 id="width"></input>
+    <b><a href="#" id="linker"><span class="material-symbols-outlined">
 link
-</span>Linked</a>
+</span></a></b>
+    <input type="number" value="5" min=1 id="height"></input>
+    &nbsp;&nbsp;&nbsp;
+    <a href="#" id="foreground_picker" class="picker">❤️</a>
+    &nbsp;
+    <a href="#" id="background_picker" class="picker">🖤</a>
     <br>
-    <input type="number" value="5" min=1></input>
-    <b>x</b>
-    <input type="number" value="5" min=1></input>
-    
+    <input type="button" value="UPLOAD"></input>
+    &nbsp;
+    <input type="button" value="COPY"></input>
   </div>
 
 </body>
 <script>
-
-hearts = {
+/*hearts = {
   "red":"❤️",
   "pink":"🩷",
   "orange":"🧡",
@@ -83,44 +100,96 @@ hearts = {
   "black":"🖤",
   "white":"🤍",
   "grey":"🩶"
-}
+}*/
+
+
+hearts = ["❤️","🩷","🧡","💛","💚","💙","🩵","💜","🤎","🖤","🤍","🩶"]
+
+
+selecting = false;
+document.addEventListener("mousedown", function(){
+  selecting = true;
+  document.title="SELECTING"
+})
+document.addEventListener("mouseup", function(){
+  selecting = false;
+  document.title="NOT SELECTING"
+})
+
+
+const CANVAS = document.getElementById("canvas")
 
 const LINKER = document.getElementById("linker")
 LINKER.addEventListener("click", toggleLink)
 linked = true;
 
-const CANVAS = document.getElementById("canvas")
-width = 5
-height = 5
+const PICKER = document.getElementById("picker")
+foregroundColour = "❤️"
+backgroundColour = "🖤"
+
+function setLinkedStatus(){
+  icon = LINKER.firstChild.cloneNode(true)
+  if (linked){
+    icon.innerHTML = "link"
+  }
+  else {
+    icon.innerHTML = "link_off"
+  }
+  LINKER.replaceChild(icon, LINKER.childNodes[0])
+}
 
 function toggleLink(){
   linked = !linked
   setLinkedStatus();
 }
 
-function setLinkedStatus(){
-  icon = LINKER.firstChild.cloneNode(true)
-  if (linked){
-    icon.innerHTML = "link"
-    text = document.createTextNode("Linked")
+function colourheart(heart){
+  heart.innerHTML = foregroundColour
+}
+
+function heartentry(e){
+  if (selecting == true){
+    colourheart(e.target)
   }
-  else {
-    icon.innerHTML = "link_off"
-    text = document.createTextNode("Unlinked")
+}
+
+function makeNewHeart(){
+  td = document.createElement("td")
+  td.innerHTML = backgroundColour
+  td.addEventListener("mousedown", function(e){colourheart(e.target)})
+  td.addEventListener("mouseenter", heartentry)
+  return td
+}
+
+function makeNewRow(width){
+  row = document.createElement("tr")
+  for (i = 0; i <= width; i ++){
+    row.appendChild(makeNewHeart())
   }
-  LINKER.replaceChild(icon, LINKER.childNodes[0])
-  LINKER.replaceChild(text, LINKER.childNodes[1])
+  return row
 }
 
 function setCanvasSize(width, height){
-  if (CANVAS.children.length() > height){
-    
+  while (CANVAS.children.length > height){
+    CANVAS.removeChild(CANVAS.lastChild)
+  }
+  while (CANVAS.children.length < height){
+    CANVAS.appendChild(makeNewRow(width))
+  }
+  for (child of CANVAS.children){
+    while (child.children.length > width){
+      child.removeChild(child.lastChild)
+    }
+    while (child.children.length < width){
+      child.appendChild(makeNewHeart())
+    }
   }
 }
 
 function setup(){
   setLinkedStatus()
-  setCanvasSize(canvasWidth, canvasHeight)
+  setCanvasSize(document.getElementById("width").value, document.getElementById("height").value)
+  
 }
 setup()
 </script>
