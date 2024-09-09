@@ -118,6 +118,10 @@ TODO
 - Responsive
 - Dump on Github
 - custom domain? .art domains are cheap right now.
+
+
+In terms of intuitive feeling, what I want is whatever the first heart to be toggled is, that heart is the activeColour 
+
 */
 
 /*hearts = {
@@ -147,6 +151,7 @@ document.addEventListener("mousedown", function(){
 document.addEventListener("mouseup", function(){
   selecting = false;
   colouredHearts = []
+  activeColour = ""
 })
 
 
@@ -164,12 +169,13 @@ WIDTHSELECTOR.addEventListener("change", function(){
 })
 HEIGHTSELECTOR.addEventListener("change", function(){
   checkLinked(HEIGHTSELECTOR.value)
-  setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value) 
+  setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value)
 })
 
 const PICKER = document.getElementById("picker")
 colourOne = "❤️"
 colourTwo = "🖤"
+activeColour = ""
 
 function setLinkedStatus(){
   icon = LINKER.firstChild.cloneNode(true)
@@ -220,14 +226,17 @@ function setCanvasSize(width, height){
 }
 
 function toggleheart(heart){
-  if (!colouredHearts.includes(heart)){
-    colouredHearts.push(heart)
+  if (activeColour == ""){
     if (heart.innerHTML == colourTwo){
-      heart.innerHTML = colourOne
+      activeColour = colourOne
     }
     else {
-      heart.innerHTML = colourTwo
+      activeColour = colourTwo
     }
+  }
+  if (!colouredHearts.includes(heart)){
+    colouredHearts.push(heart)
+    heart.innerHTML = activeColour
   }
 }
 
