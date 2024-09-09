@@ -1,8 +1,7 @@
 /*
 TODO
 - Touch support (optimistic)
-- Responsive
-- Dump on Github
+- Dark mode/light mode
 - custom domain? .art domains are cheap right now.
 
 */
@@ -31,12 +30,19 @@ selecting = false;
 document.addEventListener("mousedown", function(){
   selecting = true;
 })
+document.addEventListener("touchstart", function(){
+  selecting = true;
+})
 document.addEventListener("mouseup", function(){
   selecting = false;
   coloredHearts = []
   activeColour = ""
 })
-
+document.addEventListener("touchend", function(){
+  selecting = false;
+  coloredHearts = []
+  activeColour = ""
+})
 
 const CANVAS = document.getElementById("canvas")
 
@@ -152,6 +158,7 @@ function makeNewHeart(){
   td = document.createElement("td")
   td.innerHTML = colorTwo
   td.addEventListener("mousedown", function(e){toggleheart(e.target)})
+  td.addEventListener("touchstart", function(e){toggleheart(e.target)})
   td.addEventListener("mouseenter", heartentry)
   return td
 }
