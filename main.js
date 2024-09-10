@@ -33,15 +33,21 @@ document.addEventListener("mousedown", function(){
 document.addEventListener("touchstart", function(){
   selecting = true;
 })
+document.addEventListener("touchmove", function(){
+  selecting = true;
+  toggleheart
+})
 document.addEventListener("mouseup", function(){
   selecting = false;
   coloredHearts = []
   activeColour = ""
+  document.getElementById("status").innerHTML = ""
 })
 document.addEventListener("touchend", function(){
   selecting = false;
   coloredHearts = []
   activeColour = ""
+  document.getElementById("status").innerHTML = ""
 })
 
 const CANVAS = document.getElementById("canvas")
@@ -154,6 +160,7 @@ function toggleheart(heart){
     coloredHearts.push(heart)
     heart.innerHTML = activeColour
   }
+  document.getElementById("status").innerHTML = "SELECTING"
 }
 
 function heartentry(e){
@@ -166,9 +173,8 @@ function makeNewHeart(){
   td = document.createElement("td")
   td.innerHTML = colorTwo
   td.addEventListener("mousedown", function(e){toggleheart(e.target)})
-  td.addEventListener("touchstart", function(e){toggleheart(e.target)})
+  td.addEventListener("touchstart", function(e){preventDefault(); toggleheart(e.target)})
   td.addEventListener("mouseenter", heartentry)
-  td.addEventListener("touchmove", heartentry)
   return td
 }
 

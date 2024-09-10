@@ -14,12 +14,16 @@ body {
       margin-right: auto;
       font-size: 3em;
       user-select: none;
+      border: 0.2em solid #313338;
+      border-radius: 1em;
+      padding: 0.2em;
     }
     .settings {
+      margin-top:1em;
       margin-left: auto;
       margin-right: auto;
       width: 30%;
-      padding: 2%;
+      padding: 1em;
       border-radius: 5px;
       background-color: #313338;
       text-align: center;
