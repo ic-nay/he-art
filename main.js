@@ -184,7 +184,7 @@ function toggleheart(heart){
 }
 
 function touchheartevent(e){
-    element = document.elementFromPoint(e.x, e.y);
+    element = document.elementFromPoint(e.clientX, e.clientY);
     if (element.tagName == "TD"){
         toggleheart(element)
     }
