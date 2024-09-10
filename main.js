@@ -33,10 +33,7 @@ document.addEventListener("mousedown", function(){
 document.addEventListener("touchstart", function(){
   selecting = true;
 })
-document.addEventListener("touchmove", function(){
-  selecting = true;
-  toggleheart
-})
+document.addEventListener("touchmove", touchheartevent)
 document.addEventListener("mouseup", function(){
   selecting = false;
   coloredHearts = []
@@ -130,6 +127,30 @@ function setColorTwo(e){
   }
 }
 
+function makeNewHeart(){
+  td = document.createElement("td")
+  td.innerHTML = colorTwo
+  td.addEventListener("mousedown", function(e){toggleheart(e.target)})
+  td.addEventListener("touchstart", function(e){preventDefault(); toggleheart(e.target)})
+  td.addEventListener("mouseenter", heartentry)
+  return td
+}
+
+async function copy(){
+  text = ""
+  for (child of CANVAS.children){
+    for (heart of child.children){
+      text = text+heart.innerHTML
+    }
+    text = text+"\n"
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 function setCanvasSize(width, height){
   while (CANVAS.children.length > height){
     CANVAS.removeChild(CANVAS.lastChild)
@@ -163,33 +184,16 @@ function toggleheart(heart){
   document.getElementById("status").innerHTML = "SELECTING"
 }
 
+function touchheartevent(e){
+    element = document.elementFromPoint(e.x, e.y);
+    if (element.tagName == "TD"){
+        toggleheart(element)
+    }
+}
+
 function heartentry(e){
   if (selecting == true){
     toggleheart(e.target)
-  }
-}
-
-function makeNewHeart(){
-  td = document.createElement("td")
-  td.innerHTML = colorTwo
-  td.addEventListener("mousedown", function(e){toggleheart(e.target)})
-  td.addEventListener("touchstart", function(e){preventDefault(); toggleheart(e.target)})
-  td.addEventListener("mouseenter", heartentry)
-  return td
-}
-
-async function copy(){
-  text = ""
-  for (child of CANVAS.children){
-    for (heart of child.children){
-      text = text+heart.innerHTML
-    }
-    text = text+"\n"
-  }
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (error) {
-    console.error(error.message);
   }
 }
 
