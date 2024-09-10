@@ -112,8 +112,16 @@ function setColorOne(e){
 }
 
 function setColorTwo(e){
+  temp = colorTwo
   colorTwo = e.target.innerHTML
-  COLORTWO.innerHTML = "<span class=\"material-symbols-outlined\">ink_eraser</span>"+colorTwo
+  COLORTWO.innerHTML = "<span class=\"material-symbols-outlined\">format_color_fill</span>"+colorTwo
+  for (child of CANVAS.children){
+    for (heart of child.children){
+      if (heart.innerHTML == temp){
+        heart.innerHTML = colorTwo
+      }
+    }
+  }
 }
 
 function setCanvasSize(width, height){
@@ -160,6 +168,7 @@ function makeNewHeart(){
   td.addEventListener("mousedown", function(e){toggleheart(e.target)})
   td.addEventListener("touchstart", function(e){toggleheart(e.target)})
   td.addEventListener("mouseenter", heartentry)
+  td.addEventListener("touchmove", heartentry)
   return td
 }
 
