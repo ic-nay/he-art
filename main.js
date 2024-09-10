@@ -184,14 +184,10 @@ function toggleheart(heart){
 }
 
 function touchheartevent(e){
-    console.log(e.touches[0]);
     element = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
-    document.getElementById("status").innerHTML = "SELECTING: " + element.tagName;
     if (element.tagName == "TD"){
         toggleheart(element)
-        document.getElementById("status").innerHTML = "SELECTING: " + element.innerHTML;
     }
-    
 }
 
 function heartentry(e){
