@@ -181,7 +181,6 @@ function toggleheart(heart){
     coloredHearts.push(heart)
     heart.innerHTML = activeColour
   }
-  document.getElementById("status").innerHTML = "SELECTING"
 }
 
 function touchheartevent(e){
@@ -189,6 +188,7 @@ function touchheartevent(e){
     if (element.tagName == "TD"){
         toggleheart(element)
     }
+    document.getElementById("status").innerHTML = "SELECTING " + element.innerHTML;
 }
 
 function heartentry(e){
