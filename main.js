@@ -188,7 +188,7 @@ function touchheartevent(e){
     if (element.tagName == "TD"){
         toggleheart(element)
     }
-    document.getElementById("status").innerHTML = "SELECTING " + element.innerHTML;
+    document.getElementById("status").innerHTML = "SELECTING: " + element.tagName + element.innerHTML;
 }
 
 function heartentry(e){
