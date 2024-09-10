@@ -1,5 +1,7 @@
 /*
 TODO
+- fix single-heart touch select (preventDefault()?)
+- Comment/clean up code
 - Dark mode/light mode
 - custom domain? .art domains are cheap right now.
 
@@ -114,7 +116,7 @@ function makeNewHeart(){
   td = document.createElement("td")
   td.innerHTML = colorTwo
   td.addEventListener("mousedown", function(e){toggleheart(e.target)})
-  td.addEventListener("touchstart", function(e){toggleheart(e.target)})
+  td.addEventListener("touchstart", function(e){toggleheart(e.target)}) //is this still necessary?
   td.addEventListener("mouseenter", heartentry)
   return td
 }
