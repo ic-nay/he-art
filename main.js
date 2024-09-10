@@ -1,26 +1,9 @@
 /*
 TODO
-- Touch support (optimistic)
 - Dark mode/light mode
 - custom domain? .art domains are cheap right now.
 
 */
-
-/*hearts = {
-  "red":"❤️",
-  "pink":"🩷",
-  "orange":"🧡",
-  "yellow":"💛",
-  "green":"💚",
-  "blue":"💙",
-  "light_blue":"🩵",
-  "purple":"💜",
-  "brown":"🤎",
-  "black":"🖤",
-  "white":"🤍",
-  "grey":"🩶"
-}*/
-
 
 hearts = ["❤️","🩷","🧡","💛","💚","💙","🩵","💜","🤎","🖤","🤍","🩶"]
 
