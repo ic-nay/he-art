@@ -131,7 +131,7 @@ function makeNewHeart(){
   td = document.createElement("td")
   td.innerHTML = colorTwo
   td.addEventListener("mousedown", function(e){toggleheart(e.target)})
-  td.addEventListener("touchstart", function(e){preventDefault(); toggleheart(e.target)})
+  td.addEventListener("touchstart", function(e){toggleheart(e.target)})
   td.addEventListener("mouseenter", heartentry)
   return td
 }
@@ -184,12 +184,14 @@ function toggleheart(heart){
 }
 
 function touchheartevent(e){
-    element = document.elementFromPoint(e.clientX, e.clientY);
-    document.getElementById("status").innerHTML = e.clientX + ", " + e.clientY
+    console.log(e.touches[0]);
+    element = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+    document.getElementById("status").innerHTML = "SELECTING: " + element.tagName;
     if (element.tagName == "TD"){
         toggleheart(element)
+        document.getElementById("status").innerHTML = "SELECTING: " + element.innerHTML;
     }
-    document.getElementById("status").innerHTML = "SELECTING: " + element.tagName + element.innerHTML;
+    
 }
 
 function heartentry(e){
