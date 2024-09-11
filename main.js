@@ -1,6 +1,5 @@
 /*
 TODO
-- fix single-heart touch select (preventDefault()?)
 - Comment/clean up code
 - Dark mode/light mode
 - custom domain? .art domains are cheap right now.
@@ -28,7 +27,6 @@ document.addEventListener("touchend", function(){
   selecting = false;
   coloredHearts = []
   activeColour = ""
-  document.getElementById("status").innerHTML = ""
 })
 
 const CANVAS = document.getElementById("canvas")
