@@ -23,7 +23,6 @@ document.addEventListener("mouseup", function(){
   selecting = false;
   coloredHearts = []
   activeColour = ""
-  document.getElementById("status").innerHTML = ""
 })
 document.addEventListener("touchend", function(){
   selecting = false;
@@ -49,18 +48,18 @@ HEIGHTSELECTOR.addEventListener("change", function(){
   setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value)
 })
 
-const COLORONE = document.getElementById("colorone")
-const COLORTWO = document.getElementById("colortwo")
-const COLORONE_PICKER = document.getElementById("colorone_picker")
-const COLORTWO_PICKER = document.getElementById("colortwo_picker")
-for (child of COLORONE_PICKER.children){
-  child.addEventListener("click", setColorOne)
+const FOREGROUND = document.getElementById("foreground")
+const BACKGROUND = document.getElementById("background")
+const FOREGROUND_PICKER = document.getElementById("foreground_picker")
+const BACKGROUND_PICKER = document.getElementById("background_picker")
+for (child of FOREGROUND_PICKER.children){
+  child.addEventListener("click", setForeground)
 }
-for (child of COLORTWO_PICKER.children){
-  child.addEventListener("click", setColorTwo)
+for (child of BACKGROUND_PICKER.children){
+  child.addEventListener("click", setBackground)
 }
-colorOne = "❤️"
-colorTwo = "🖤"
+foregroundColor = "❤️"
+backgroundColor = "🖤"
 activeColour = ""
 
 function setLinkedStatus(){
@@ -94,19 +93,19 @@ function makeNewRow(width){
   return row
 }
 
-function setColorOne(e){
-  colorOne = e.target.innerHTML
-  COLORONE.innerHTML = "<span class=\"material-symbols-outlined\">stylus_note</span>"+colorOne
+function setForeground(e){
+  foregroundColor = e.target.innerHTML
+  FOREGROUND.innerHTML = "<span class=\"material-symbols-outlined\">stylus_note</span>"+foregroundColor
 }
 
-function setColorTwo(e){
-  temp = colorTwo
-  colorTwo = e.target.innerHTML
-  COLORTWO.innerHTML = "<span class=\"material-symbols-outlined\">format_color_fill</span>"+colorTwo
+function setBackground(e){
+  temp = backgroundColor
+  backgroundColor = e.target.innerHTML
+  BACKGROUND.innerHTML = "<span class=\"material-symbols-outlined\">format_color_fill</span>"+backgroundColor
   for (child of CANVAS.children){
     for (heart of child.children){
       if (heart.innerHTML == temp){
-        heart.innerHTML = colorTwo
+        heart.innerHTML = backgroundColor
       }
     }
   }
@@ -114,9 +113,14 @@ function setColorTwo(e){
 
 function makeNewHeart(){
   td = document.createElement("td")
-  td.innerHTML = colorTwo
-  td.addEventListener("mousedown", function(e){toggleheart(e.target)})
-  td.addEventListener("touchstart", function(e){toggleheart(e.target)}) //is this still necessary?
+  td.innerHTML = backgroundColor
+  td.addEventListener("mousedown", function(e){
+    toggleheart(e.target)
+  })
+  td.addEventListener("touchstart", function(e){
+    e.preventDefault()
+    toggleheart(e.target)
+  }) //is this still necessary?
   td.addEventListener("mouseenter", heartentry)
   return td
 }
@@ -155,11 +159,11 @@ function setCanvasSize(width, height){
 
 function toggleheart(heart){
   if (activeColour == ""){
-    if (heart.innerHTML == colorTwo){
-      activeColour = colorOne
+    if (heart.innerHTML == backgroundColor){
+      activeColour = foregroundColor
     }
     else {
-      activeColour = colorTwo
+      activeColour = backgroundColor
     }
   }
   if (!coloredHearts.includes(heart)){
