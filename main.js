@@ -1,15 +1,11 @@
-/*
-TODO
-- Comment/clean up code
-- Dark mode/light mode
-- custom domain? .art domains are cheap right now.
-
-*/
-
 hearts = ["❤️","🩷","🧡","💛","💚","💙","🩵","💜","🤎","🖤","🤍","🩶"]
 
+// Used to track what hearts get coloured in a given stroke, so that
+// re-passing over a heart does not toggle it back again
 coloredHearts = []
 
+
+//Keeps track of whether the user is selecting something or not.
 selecting = false;
 document.addEventListener("mousedown", function(){
   selecting = true;
@@ -18,23 +14,26 @@ document.addEventListener("touchstart", function(){
   selecting = true;
 })
 document.addEventListener("touchmove", touchheartevent)
+//Clears the list of hearts being coloured and the active colour being drawn with
 document.addEventListener("mouseup", function(){
   selecting = false;
   coloredHearts = []
-  activeColour = ""
+  activeColor = ""
 })
 document.addEventListener("touchend", function(){
   selecting = false;
   coloredHearts = []
-  activeColour = ""
+  activeColor = ""
 })
 
 const CANVAS = document.getElementById("canvas")
 
+//Height-width linking
 const LINKER = document.getElementById("linker")
 LINKER.addEventListener("click", toggleLink)
 linked = false;
 
+//Height and width selectors
 const WIDTHSELECTOR = document.getElementById("width")
 const HEIGHTSELECTOR = document.getElementById("height")
 WIDTHSELECTOR.addEventListener("change", function(){
@@ -46,6 +45,8 @@ HEIGHTSELECTOR.addEventListener("change", function(){
   setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value)
 })
 
+
+//Colour selectors
 const FOREGROUND = document.getElementById("foreground")
 const BACKGROUND = document.getElementById("background")
 const FOREGROUND_PICKER = document.getElementById("foreground_picker")
@@ -58,22 +59,16 @@ for (child of BACKGROUND_PICKER.children){
 }
 foregroundColor = "❤️"
 backgroundColor = "🖤"
-activeColour = ""
-
-function setLinkedStatus(){
-  icon = LINKER.firstChild.cloneNode(true)
-  if (linked){
-    icon.innerHTML = "link"
-  }
-  else {
-    icon.innerHTML = "link_off"
-  }
-  LINKER.replaceChild(icon, LINKER.childNodes[0])
-}
+activeColor = ""
 
 function toggleLink(){
   linked = !linked
-  setLinkedStatus();
+  if (linked){
+    LINKER.firstChild.innerHTML = "link"
+  }
+  else {
+    LINKER.firstChild.innerHTML = "link_off"
+  }
 }
 
 function checkLinked(value){
@@ -81,14 +76,6 @@ function checkLinked(value){
     WIDTHSELECTOR.value = value
     HEIGHTSELECTOR.value = value
   }
-}
-
-function makeNewRow(width){
-  row = document.createElement("tr")
-  for (i = 0; i <= width; i ++){
-    row.appendChild(makeNewHeart())
-  }
-  return row
 }
 
 function setForeground(e){
@@ -107,6 +94,14 @@ function setBackground(e){
       }
     }
   }
+}
+
+function makeNewRow(width){
+  row = document.createElement("tr")
+  for (i = 0; i <= width; i ++){
+    row.appendChild(makeNewHeart())
+  }
+  return row
 }
 
 function makeNewHeart(){
@@ -156,21 +151,22 @@ function setCanvasSize(width, height){
 }
 
 function toggleheart(heart){
-  if (activeColour == ""){
-    if (heart.innerHTML == backgroundColor){
-      activeColour = foregroundColor
+  if (activeColor == ""){
+    if (heart.innerHTML == foregroundColor){
+      activeColor = backgroundColor
     }
     else {
-      activeColour = backgroundColor
+      activeColor = foregroundColor
     }
   }
   if (!coloredHearts.includes(heart)){
     coloredHearts.push(heart)
-    heart.innerHTML = activeColour
+    heart.innerHTML = activeColor
   }
 }
 
 function touchheartevent(e){
+    //Actually determines whether the user is touching a heart or not.
     element = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
     if (element.tagName == "TD"){
         toggleheart(element)
@@ -183,9 +179,4 @@ function heartentry(e){
   }
 }
 
-function setup(){
-  setLinkedStatus()
-  checkLinked(6)
-  setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value) 
-}
-setup()
+setCanvasSize(WIDTHSELECTOR.value, HEIGHTSELECTOR.value)
